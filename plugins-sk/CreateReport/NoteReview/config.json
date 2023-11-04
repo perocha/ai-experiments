@@ -1,0 +1,21 @@
+{
+    "schema": 1,
+    "description": "Note review of the notes taken on a session of a congress or conference.",
+    "type": "completion",
+    "completion": {
+      "max_tokens": 1000,
+      "temperature": 0.9,
+      "top_p": 0.5,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0
+    },
+    "input": {
+      "parameters": [
+        {
+              "name": "input",
+              "description": "Notes taken on a session of a congress or conference.",
+              "defaultValue": ""
+        }
+    ]
+    }
+  }

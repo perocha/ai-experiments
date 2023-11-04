@@ -1,0 +1,4 @@
+Provide a summary of the session in the form of a report. The report should be written in a clear and concise manner, with no specific sections.
+---
+{{$input}}
+---

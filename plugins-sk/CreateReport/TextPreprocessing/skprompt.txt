@@ -1,0 +1,8 @@
+Clean and standardize the raw notes received as input:
+Tokenization: Split the text into individual words or phrases, ensuring that each element is separated for further analysis.
+Remove Punctuation: Eliminate unnecessary punctuation marks, such as commas, periods, and quotation marks, to ensure text consistency.
+Convert to Lowercase: Standardize the text to lowercase to ensure that all words are in the same format and prevent case-related issues.
+Remove Stop Words: Eliminate common stop words, such as "the," "and," "of," and others, to focus on the meaningful content of the text.
+---
+{{$input}}
+---

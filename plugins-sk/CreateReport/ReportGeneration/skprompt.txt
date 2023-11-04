@@ -1,0 +1,8 @@
+Compile the curated information into a coherent report notes, following a structured format.
+---
+{{$input}}
+---
+The section report should be written in a clear and concise manner with the following sections:
+- **Introduction**: A brief introduction to the topic and the purpose of the session.
+- **Discussion**: A discussion of the key issues and the main points raised during the session.
+- **Conclusion**: A brief conclusion on the topic and the key takeaways.

@@ -1,0 +1,6 @@
+Review the notes and familiarize yourself with the content. Highlight any areas that need clarification.
+---
+{{$input}}
+---
+Provide highlights of the content summarizing the key points.
+Highlight any areas that need clarification.

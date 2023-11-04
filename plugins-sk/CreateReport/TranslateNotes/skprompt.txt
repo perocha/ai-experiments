@@ -1,0 +1,4 @@
+Rewrites the input in {{$language}}
+---
+{{$input}}
+---

@@ -1,0 +1,21 @@
+{
+    "schema": 1,
+    "description": "Receiving as input a document, clean and standardize the raw notes received as input.", 
+    "type": "completion",
+    "completion": {
+      "max_tokens": 1000,
+      "temperature": 0.9,
+      "top_p": 0.5,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0
+    },
+    "input": {
+      "parameters": [
+        {
+              "name": "input",
+              "description": "Notes taken on the different sessions of a congress or conference.",
+              "defaultValue": ""
+        }
+    ]
+    }
+  }

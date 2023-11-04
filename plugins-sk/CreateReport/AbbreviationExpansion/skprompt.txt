@@ -1,0 +1,6 @@
+Utilize a dictionary or a custom list of abbreviations and acronyms related to Rett Syndrome, rare diseases, and medical terms.
+Replace abbreviations and acronyms with their full forms.
+---
+Input text: {{$input}}
+---
+Return exactly the same text received as input, but replace abbreviations and acronyms with their full forms.
