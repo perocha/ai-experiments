@@ -76,6 +76,13 @@ class notebook_config:
             # Load config to environment variables
             self.load_config_to_env()
 
+    # Print the config to the console, except for the API key
+    def print_config(self):
+        print(f"API Type: {self.api_type}")
+        if self.api_type == "azure":
+            print(f"Endpoint: {self.endpoint}")
+            print(f"Model: {self.model}")
+            print(f"Model Version: {self.model_version}")
 
     def load_config_to_env(self):
         import os
