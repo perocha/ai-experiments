@@ -1,0 +1,5 @@
+# Secrets
+config/settings.json
+
+# Python cache
+__pycache__/
