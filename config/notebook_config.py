@@ -9,6 +9,7 @@
 # This class will be used in Visual Studio Code, requesting input from the user from a Jupyter Notebook.
 #
 import json
+import os
 
 # Define default values
 DEFAULT_API_TYPE = "azure"
@@ -85,14 +86,31 @@ class notebook_config:
             print(f"Model Version: {self.model_version}")
 
     def load_config_to_env(self):
-        import os
-
         if self.api_type == "azure":
             os.environ["OPENAI_API_TYPE"] = self.api_type
             os.environ["AZURE_OPENAI_KEY"] = self.azure_api_key
             os.environ["AZURE_OPENAI_ENDPOINT"] = self.endpoint
+            os.environ["AZURE_OPENAI_API_BASE"] = self.endpoint
             os.environ["AZURE_OPENAI_MODEL"] = self.model
             os.environ["AZURE_OPENAI_MODEL_VERSION"] = self.model_version
         elif self.api_type == "openai":
             os.environ["OPENAI_API_TYPE"] = self.api_type
             os.environ["OPENAI_KEY"] = self.azure_api_key
+
+    def get_config(self) -> dict:
+        return self.__dict__
+
+    def get_api_type(self) -> str:
+        return self.api_type
+
+    def get_endpoint(self) -> str:
+        return self.endpoint
+
+    def get_model(self) -> str:
+        return self.model
+
+    def get_model_version(self) -> str:
+        return self.model_version
+    
+    def get_api_key(self) -> str:
+        return self.azure_api_key
