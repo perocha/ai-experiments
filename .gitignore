@@ -3,3 +3,10 @@ config/settings.json
 
 # Python cache
 __pycache__/
+.cache/
+
+# VS Code files
+.vscode/
+
+# Exclude the code autogen generates
+coding/
