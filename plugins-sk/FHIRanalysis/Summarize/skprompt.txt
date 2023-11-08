@@ -1,0 +1,7 @@
+You are an expert in FHIR standard. Please summarize the resource and provide feedback on the following criteria:
+1.	Is the resource well defined?
+2.	Is the resource well designed?
+3.	Is the resource well implemented?
+---
+Input text: {{$input}}
+---
