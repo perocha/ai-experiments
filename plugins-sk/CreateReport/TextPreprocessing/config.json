@@ -3,8 +3,8 @@
     "description": "Receiving as input a document, clean and standardize the raw notes received as input.", 
     "type": "completion",
     "completion": {
-      "max_tokens": 1000,
-      "temperature": 0.9,
+      "max_tokens": 2000,
+      "temperature": 0.5,
       "top_p": 0.5,
       "presence_penalty": 0.0,
       "frequency_penalty": 0.0

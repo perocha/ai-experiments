@@ -4,3 +4,4 @@ Review the notes and familiarize yourself with the content. Highlight any areas 
 ---
 Provide highlights of the content summarizing the key points.
 Highlight any areas that need clarification.
+If the notes are not clear and you are unable to clarify the content, write "TERMINATE PROCESS" as your output.
