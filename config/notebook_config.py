@@ -17,8 +17,8 @@ DEFAULT_MODEL = "gpt-35-turbo"
 DEFAULT_MODEL_VERSION = "2023-05-15"
 
 class notebook_config:
-    def __init__(self):
-        self.config_file = "../config/settings.json"
+    def __init__(self, config_file: str = '../config/settings.json'):
+        self.config_file = config_file
         self.api_type = DEFAULT_API_TYPE
         self.endpoint = ""
         self.model = DEFAULT_MODEL
@@ -72,18 +72,14 @@ class notebook_config:
             json.dump(self.__dict__, f)
 
     def load_config_from_file(self):
-        with open(self.config_file, "r") as f:
-            self.__dict__ = json.load(f)
-            # Load config to environment variables
-            self.load_config_to_env()
-
-    # Print the config to the console, except for the API key
-    def print_config(self):
-        print(f"API Type: {self.api_type}")
-        if self.api_type == "azure":
-            print(f"Endpoint: {self.endpoint}")
-            print(f"Model: {self.model}")
-            print(f"Model Version: {self.model_version}")
+        try:
+            with open(self.config_file, "r") as f:
+                self.__dict__ = json.load(f)
+                # Load config to environment variables
+                self.load_config_to_env()
+        except FileNotFoundError:
+            # Raise error if file not found
+            raise FileNotFoundError(f"File {self.config_file} not found.")
 
     def load_config_to_env(self):
         if self.api_type == "azure":
