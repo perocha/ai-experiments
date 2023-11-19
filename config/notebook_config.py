@@ -24,6 +24,8 @@ class notebook_config:
         self.model = DEFAULT_MODEL
         self.model_version = DEFAULT_MODEL_VERSION
         self.azure_api_key = ""
+        self.form_regonizer_endpoint = ""
+        self.form_regonizer_key = ""
 
     def ask_api_type(self):
         api_type = input("Which API would you like to use? (Azure or OpenAI): ").lower()
@@ -65,6 +67,22 @@ class notebook_config:
             if model_version == "":
                 model_version = DEFAULT_MODEL_VERSION
             self.model_version = model_version
+            self.save_config_to_file()
+
+    def ask_form_regonizer_endpoint(self):
+        if self.api_type == "azure":
+            form_regonizer_endpoint = input("Please enter your form regonizer endpoint: ")
+            if form_regonizer_endpoint == "":
+                raise ValueError("Form regonizer endpoint cannot be empty.")
+            self.form_regonizer_endpoint = form_regonizer_endpoint
+            self.save_config_to_file()
+
+    def ask_form_regonizer_key(self):
+        if self.api_type == "azure":
+            form_regonizer_key = input("Please enter your form regonizer key: ")
+            if form_regonizer_key == "":
+                raise ValueError("Form regonizer key cannot be empty.")
+            self.form_regonizer_key = form_regonizer_key
             self.save_config_to_file()
 
     def save_config_to_file(self):
@@ -110,3 +128,9 @@ class notebook_config:
     
     def get_api_key(self) -> str:
         return self.azure_api_key
+
+    def get_form_regonizer_endpoint(self) -> str:
+        return self.form_regonizer_endpoint
+
+    def get_form_regonizer_key(self) -> str:
+        return self.form_regonizer_key
