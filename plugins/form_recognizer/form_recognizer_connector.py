@@ -3,6 +3,7 @@ from azure.ai.formrecognizer import DocumentAnalysisClient, AnalyzeResult
 from typing import Optional
 from logging import Logger
 from semantic_kernel.utils.null_logger import NullLogger
+import json
 
 class FormRecognizerConnector():
 
@@ -47,5 +48,34 @@ class FormRecognizerConnector():
 
         # Create a string with the results, separated by ";"
         result = ";".join([invoice_total_value, customer_name_value, invoice_id_value, invoice_date_value])
+
+        return result
+
+
+    def read_invoice(self, filename_path: str) -> str:
+        # Create an instance of a Form Recognizer client
+        document_analysis_client = DocumentAnalysisClient(
+            endpoint=self._endpoint, credential=AzureKeyCredential(self._api_key)
+        )
+
+        poller = document_analysis_client.begin_analyze_document("prebuilt-invoice", open(filename_path, "rb"))
+
+        invoices = poller.result()
+
+        invoice = invoices.documents[0]
+
+        # Create a dictionary to store all field values
+        field_values = {}
+
+        # Iterate over all fields in the invoice
+        for field_name, field in invoice.fields.items():
+            # Convert the field value to a string if it exists, else store None
+            field_values[field_name] = str(field.value) if field and field.value else None
+
+            # Log the field value
+            self._logger.debug("{}: {}".format(field_name, field_values[field_name]))
+
+        # Convert the dictionary to a JSON string
+        result = json.dumps(field_values, ensure_ascii=False)
 
         return result

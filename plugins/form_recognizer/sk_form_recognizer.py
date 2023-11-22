@@ -41,6 +41,7 @@ class FormRecognizer:
         if not filename_path:
             raise ValueError("The filename_path argument cannot be null.")
 
-        result = self.form_recognizer.recognize_invoice_async(filename_path=filename_path)
+        #result = self.form_recognizer.recognize_invoice_async(filename_path=filename_path)
+        result = self.form_recognizer.read_invoice(filename_path=filename_path)
 
         return result

@@ -1,0 +1,11 @@
+Summarize the invoice information, with the following details, with a json output:
+{
+  "invoice_number": "12345",
+  "customer_name": "John Doe",
+  "date": "2019-01-01",
+  "total": 123.45
+  "description": "This is a description"
+}
+---
+Input text: {{$input}}
+---
