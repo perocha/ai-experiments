@@ -10,3 +10,7 @@ __pycache__/
 
 # Exclude the code autogen generates
 coding/
+
+# Exclude logs
+logs/
+*.log
