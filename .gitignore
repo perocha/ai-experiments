@@ -14,3 +14,6 @@ coding/
 # Exclude logs
 logs/
 *.log
+
+# Exclude the data
+data/

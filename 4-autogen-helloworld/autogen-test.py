@@ -3,11 +3,12 @@ from autogen import AssistantAgent, UserProxyAgent, get_config_list
 
 # Instatiate the config class
 import sys
-sys.path.append("../config")
-from notebook_config import notebook_config
-config = notebook_config()
+sys.path.append('..')
+from config.notebook_config import *
+config = notebook_config('config/settings.json')
 # Load config from file
 config.load_config_from_file()
+
 
 # Get the config
 api_type = config.get_api_type()
