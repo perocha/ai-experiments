@@ -17,3 +17,9 @@ logs/
 
 # Exclude the data
 data/
+
+# Exclude credentials
+credentials*
+
+# Exclude Word documents
+*.docx

@@ -1,0 +1,6 @@
+Please review and curate the following conference session transcript on Rett Syndrome. The original transcript may contain noise, irrelevant content, and occasional transcription errors.
+Focus on producing a VERY detailed, polished and accurate version by:
+Correcting any obvious errors in language or terminology to maintain clarity and accuracy.
+Removing any filler language, repetition, and irrelevant or off-topic remarks.
+Highlighting essential points related to the session’s topic and ensuring key ideas are presented logically.
+Output a refined transcript that maintains the original speaker's intent and tone while making it easier to read and understand.

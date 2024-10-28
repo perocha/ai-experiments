@@ -1,0 +1,7 @@
+Summarize the following transcript of a session presented at the Rett Syndrome World Congress.
+The goal is to provide a comprehensive yet concise overview of the session.
+Please ensure the summary is suitable for individuals with a general knowledge of Rett Syndrome,
+focusing on aspects that would be meaningful for families.
+---
+{{$input}}
+---
