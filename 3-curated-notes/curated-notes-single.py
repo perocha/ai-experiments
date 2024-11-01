@@ -3,10 +3,13 @@ from docx import Document
 from openai import AzureOpenAI
 import json
 import time
+import argparse
 
 def load_credentials(filename):
     with open(filename) as cred_file:
         return json.load(cred_file)
+
+
 
 # Function to load a prompt from a text file
 def load_prompt(filename):
@@ -19,43 +22,49 @@ summary_prompt = load_prompt("prompt_summary.txt")
 key_takeaways_prompt = load_prompt("prompt_key_takeaways.txt")
 practical_advice_prompt = load_prompt("prompt_practical_advice.txt")
 
-# Function to call OpenAI for summarizing the session
-def generate_curated_transcript(input_text):
-    return openai_api_call("Generate a curated transcript", input_text, curate_prompt)
 
-def generate_summary(input_text):
-    return openai_api_call("Generate a summary", input_text, summary_prompt)
+
+# Function to call OpenAI for summarizing the session
+def generate_curated_transcript(input_text, language, max_tokens):
+    return openai_api_call("Generate a curated transcript", input_text, curate_prompt, language, max_tokens)
+
+def generate_summary(input_text, language, max_tokens):
+    return openai_api_call("Generate a summary", input_text, summary_prompt, language, max_tokens)
 
 # Function to call OpenAI for extracting key takeaways
-def generate_key_takeaways(input_text):
-    return openai_api_call("Generate key takeaways", input_text, key_takeaways_prompt)
+def generate_key_takeaways(input_text, language, max_tokens):
+    return openai_api_call("Generate key takeaways", input_text, key_takeaways_prompt, language, max_tokens)
 
 # Function to call OpenAI for providing practical advice
-def generate_practical_advice(input_text):
-    return openai_api_call("Provide practical advice", input_text, practical_advice_prompt)
+def generate_practical_advice(input_text, language, max_tokens):
+    return openai_api_call("Provide practical advice", input_text, practical_advice_prompt, language, max_tokens)
+
+
 
 # Core function to make OpenAI API calls with error handling and retries
-def openai_api_call(prompt_title, input_text, prompt_instruction):
+def openai_api_call(prompt_title, input_text, prompt_instruction, language, max_tokens):
     summary = None
     retry_attempts = 0
     while summary is None:
         try:
             print(f"{prompt_title} (Attempt {retry_attempts + 1})...")
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4-32k",
                 messages=[
-                    {"role": "system", "content": "You are an AI expert in Rett Syndrome, specialized on generating summaries of scientific sessions."},
+                    {"role": "system", "content": "You are an AI expert in Rett Syndrome."},
                     {
                         "role": "user", 
                         "content": f"""
                         {prompt_instruction}
                         The output format should be plain text without any markdown or formatting.
+                        The output should be in {language}.
 
+                        The input text is as follows:
                         {input_text}
                         """
                     }
                 ],
-                max_tokens=500,
+                max_tokens=max_tokens,
                 temperature=0.2
             )
             summary = response.choices[0].message.content
@@ -124,7 +133,7 @@ print(f"Found {len(sessions)} sessions in the document.")
 
 
 # Load OpenAI credentials
-openai_keys_file = "../credentials_openai_azure.json"
+openai_keys_file = "../credentials_openai_azure2.json"
 openai_model_info = load_credentials(openai_keys_file)
 openai = AzureOpenAI(
     api_key=openai_model_info["api_key"],
@@ -133,13 +142,37 @@ openai = AzureOpenAI(
     azure_deployment=openai_model_info["deployment_id"]
 )
 
-# Get the session number from the argument, default to 1 (first session) if not provided
-session_number = int(sys.argv[1]) if len(sys.argv) > 1 else 1
+
+
+
+# Define the argument parser
+parser = argparse.ArgumentParser(description='Process session number, language, and max tokens.')
+parser.add_argument('--session_number', type=int, nargs='?', default=1, help='Session number (default: 1)')
+parser.add_argument('--language', type=str, default='English', help='Language (default: English)')
+parser.add_argument('--max_tokens', type=int, default=100, help='Maximum number of tokens (default: 100)')
+
+# Parse the arguments
+args = parser.parse_args()
+
+# Get the session number, language, and max tokens from the arguments
+session_number = args.session_number
+language = args.language
+max_tokens = args.max_tokens
 
 # Check if session number is within the valid range
 if session_number < 1 or session_number > len(sessions):
     print(f"Invalid session number: {session_number}. Please choose a number between 1 and {len(sessions)}.")
     sys.exit(1)
+
+# Use the language and max_tokens arguments as needed
+print(f"Selected language: {language}")
+print(f"Max tokens: {max_tokens}")
+
+
+
+
+
+
 
 # Create a new Word document for output
 output_doc = Document()
@@ -158,18 +191,29 @@ input_text = (
 )
 
 # Call each prompt function
-curated_transcript = generate_curated_transcript(input_text)
+max_tokens = 5000
+curated_transcript = generate_curated_transcript(input_text, language, max_tokens)
 print("Curated transcript generated successfully")
 print(curated_transcript)
+
+# Save the curated transcript and summary to a text file
+with open("curated_transcript.txt", "w") as file:
+    file.write(curated_transcript)
+
 print("\n************************************\n")
-summary = generate_summary(curated_transcript)
-key_takeaways = generate_key_takeaways(curated_transcript)
+max_tokens = 5000
+summary = generate_summary(curated_transcript, language, max_tokens)
+with open("summary.txt", "w") as file:
+    file.write(summary)
+
+max_tokens = 5000
+key_takeaways = generate_key_takeaways(curated_transcript, language, max_tokens)
 #practical_advice = generate_practical_advice(curated_transcript)
 
 # Add session details to the document
 output_doc.add_heading(session["title"], level=2)
-output_doc.add_heading("Author Information", level=3)
-output_doc.add_paragraph(session["authorInfo"])
+#output_doc.add_heading("Author Information", level=3)
+#output_doc.add_paragraph(session["authorInfo"])
 #output_doc.add_heading("Affiliations", level=3)
 #output_doc.add_paragraph(session["affiliations"])
 
